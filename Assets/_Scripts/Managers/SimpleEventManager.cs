@@ -35,6 +35,12 @@ namespace _Scripts.Managers
             OnRebuildLevelRequest?.Invoke();
         }
         
+        public event Action OnRebuildLevelComplete;
+        public void RebuildLevelComplete()
+        {
+            OnRebuildLevelComplete?.Invoke();
+        }
+        
         public event Action OnAutoSolveRequest;
         public void AutoSolveRequest()
         {

@@ -28,6 +28,7 @@ namespace _Scripts.Managers
 
         private List<GameObject> _tilesGameObjects;
         private bool _isInAutoSolveMode;
+        private bool _isBoardGenerating;
 
         private void OnEnable()
         {
@@ -48,7 +49,6 @@ namespace _Scripts.Managers
         {
             GenerateSolvableBoard();
         }
-        
 
 
         private void GenerateSolvableBoard()
@@ -58,6 +58,22 @@ namespace _Scripts.Managers
                 Debug.Log("Solving Board in process!");
                 return;
             }
+
+            if (_isBoardGenerating)
+            {
+                Debug.Log("Board generation in process!");
+                return;
+            }
+
+            _isBoardGenerating = true;
+            var cor = StartCoroutine(GenerateSolvableBoardCoroutine());
+
+        }
+
+
+        private IEnumerator GenerateSolvableBoardCoroutine()
+        {
+            
             SimpleEventManager.Instance.BoardSolvedStatus(false);
             
             if (_tilesGameObjects != null)
@@ -98,6 +114,7 @@ namespace _Scripts.Managers
             Dictionary<Vector3, TileDataSo> generatedBoard = new Dictionary<Vector3, TileDataSo>();
             
             int currentAttempt = 0;
+            int batchSize = 30;
             for (int attempt = 0; attempt < rebuildAttempts; attempt++)
             {
                 Debug.Log("Attempt "+attempt);
@@ -121,13 +138,22 @@ namespace _Scripts.Managers
                 }
 
                 currentAttempt++;
+                //setting attempts count per frame
+                if (attempt % batchSize == 0)
+                {
+                    yield return null;
+                }
             }
+            
 
             Debug.Log($"Attempts took to generate solvable board {currentAttempt+1}");
             
             _tilesGameObjects = tileGenerator.GenerateTiles(generatedBoard);
 
             UpdateTilesIsOpenStatus(_tilesGameObjects);
+
+            _isBoardGenerating = false;
+            SimpleEventManager.Instance.RebuildLevelComplete();
         }
 
         private int _minimumTilesLeft;

@@ -60,7 +60,7 @@ namespace _Scripts.Managers
                 
                 var zPositionCompensation = requiredSize * 4.5f;
                 var yPositionCompensation = requiredSize *1.3f;
-                var xPositionCompensation = requiredSize * 0.3f;
+                var xPositionCompensation = requiredSize * 0.1f;
                 Camera.main.transform.rotation = Quaternion.Euler(-10, 10, -1.8f);
                 Camera.main.transform.position = new Vector3(-xPositionCompensation, -yPositionCompensation, -zPositionCompensation);
             }
