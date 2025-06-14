@@ -5,6 +5,7 @@ using System.Linq;
 using _Scripts.Board;
 using _Scripts.Tiles;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Scripts.Managers
 {
@@ -29,7 +30,11 @@ namespace _Scripts.Managers
         private List<GameObject> _tilesGameObjects;
         private bool _isInAutoSolveMode;
         private bool _isBoardGenerating;
+        private FigureValidator _generator;
 
+        private List<TileDataSo> _tilesRandomPairsList = new();
+        private int _minimumTilesLeft;
+        
         private void OnEnable()
         {
             SimpleEventManager.Instance.OnTileClicked += CompareTiles;
@@ -47,6 +52,7 @@ namespace _Scripts.Managers
 
         private void Start()
         {
+            _generator = new FigureValidator();
             GenerateSolvableBoard();
         }
 
@@ -108,10 +114,8 @@ namespace _Scripts.Managers
                 }
             }
 
-
-            BoardGenerator generator = new BoardGenerator();
-
-            Dictionary<Vector3, TileDataSo> generatedBoard = new Dictionary<Vector3, TileDataSo>();
+            
+            List<Vector3> generatedBoard = new List<Vector3>();
             
             int currentAttempt = 0;
             int batchSize = 30;
@@ -119,7 +123,7 @@ namespace _Scripts.Managers
             {
                 Debug.Log("Attempt "+attempt);
                 
-                generatedBoard = generator.GenerateBoard(blueprint, tilesSoList);
+                generatedBoard = _generator.GenerateBoard(blueprint);
 
                 bool isSolvable = IsBoardSolvable(generatedBoard);
                 
@@ -148,7 +152,7 @@ namespace _Scripts.Managers
 
             Debug.Log($"Attempts took to generate solvable board {currentAttempt+1}");
             
-            _tilesGameObjects = tileGenerator.GenerateTiles(generatedBoard);
+            _tilesGameObjects = tileGenerator.GenerateTiles(generatedBoard, _tilesRandomPairsList);
 
             UpdateTilesIsOpenStatus(_tilesGameObjects);
 
@@ -156,14 +160,24 @@ namespace _Scripts.Managers
             SimpleEventManager.Instance.RebuildLevelComplete();
         }
 
-        private int _minimumTilesLeft;
-        private bool IsBoardSolvable(Dictionary<Vector3, TileDataSo> board)
+
+        private bool IsBoardSolvable(List<Vector3> positions)
         {
            
-            var virtualTiles = board
+            /*var virtualTiles = positions
                 .Select(pair => new VirtualTile(pair.Value.tileName, pair.Key))
                 .Cast<ITile>()
-                .ToList();
+                .ToList();*/
+
+            List<ITile> virtualTiles = new List<ITile>();
+
+            _tilesRandomPairsList = TilePairsRandomizeList(positions, tilesSoList);
+            
+            for (int i = 0; i < positions.Count; i++)
+            {
+                virtualTiles.Add(new VirtualTile(_tilesRandomPairsList[i].TileName, positions[i]));
+                
+            }
 
 
             while (virtualTiles.Any())
@@ -180,10 +194,13 @@ namespace _Scripts.Managers
                     //Debug.Log(tile.IsOpen);
                     //Debug.Log("Is available " + IsTileAvailable(virtualTiles, tile));
                 }
+
+                
                 
                 
                 //remove matched virtual tiles if exist
                 List<ITile> matchingTiles = GetFirstAvailableMatchingTiles(virtualTiles);
+                
 
                 if (matchingTiles != null)
                 {
@@ -293,7 +310,7 @@ namespace _Scripts.Managers
 
                 UpdateTilesIsOpenStatus(_tilesGameObjects);
                 //Debug.Log(_tilesGameObjects.Count);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.5f);
             }
             SimpleEventManager.Instance.UpdateInputBlockStatus(false);
             SimpleEventManager.Instance.BoardSolvedStatus(true);
@@ -302,6 +319,25 @@ namespace _Scripts.Managers
         }
 
 
+        private void UpdateTilesIsOpenStatus1(List<GameObject> tileGameObjects)
+        {
+            List<ITile> iTiles = tileGameObjects
+                .Select(go => go.GetComponent<ITile>())
+                .Where(tile => tile != null)
+                .ToList();
+
+
+            foreach (var tileGameObject in tileGameObjects)
+            {
+                Tile tile = tileGameObject.GetComponent<Tile>();
+
+                bool isAvailable = IsTileAvailable(iTiles, tile);
+                tileGameObject.GetComponent<Tile>().IsOpen = isAvailable;
+                //Debug.Log(isAvailable);
+            }
+
+        }
+        
         private void UpdateTilesIsOpenStatus(List<GameObject> tileGameObjects)
         {
             List<ITile> iTiles = tileGameObjects
@@ -310,7 +346,7 @@ namespace _Scripts.Managers
                 .ToList();
 
 
-            foreach (var tileGameObject in tileGameObjects) //todo extract method to use in solvable and autosolve..?
+            foreach (var tileGameObject in tileGameObjects)
             {
                 Tile tile = tileGameObject.GetComponent<Tile>();
 
@@ -385,6 +421,27 @@ namespace _Scripts.Managers
             }
 
             return false;
+        }
+        
+        public List<TileDataSo> TilePairsRandomizeList(List<Vector3> positionsList, List<TileDataSo> tilesSoList)
+        {
+            //check available tileSo count
+            if (tilesSoList.Count < positionsList.Count / 2)
+            {
+                throw new Exception(
+                    "Not enough TileDataSo types to generate pairs. Check TileDataSo types in storage.");
+            }
+            
+            //generate tile so pairs
+            List<TileDataSo> firstElements = tilesSoList.Take(positionsList.Count / 2).ToList();
+
+            List<TileDataSo> tilePairsRandomizeList = new List<TileDataSo>();
+
+            tilePairsRandomizeList.AddRange(firstElements);
+            tilePairsRandomizeList.AddRange(firstElements);
+
+            tilePairsRandomizeList = tilePairsRandomizeList.OrderBy(x => Random.Range(0f, 1f)).ToList();
+            return tilePairsRandomizeList;
         }
 
         private void CompareTiles(Tile tile)

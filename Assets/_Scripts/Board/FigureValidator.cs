@@ -7,14 +7,12 @@ using Random = UnityEngine.Random;
 
 namespace _Scripts.Board
 {
-    public class BoardGenerator
+    public class FigureValidator
     {
 
-        public Dictionary<Vector3, TileDataSo>
-            GenerateBoard(Vector3[] positions,
-                List<TileDataSo> tilesSo) //todo remove ve3 from return ? we have board position in ITile
+        public List<Vector3> GenerateBoard(Vector3[] positions)
         {
-            Dictionary<Vector3, TileDataSo> boardDictionary = new();
+            List<Vector3> boardList = new();
 
             //checks
             int tileCount = positions.Length;
@@ -27,45 +25,23 @@ namespace _Scripts.Board
             {
                 throw new Exception("Positions must be unique. Check positions.");
             }
-
-            if (tilesSo.Count < tileCount / 2)
-            {
-                throw new Exception(
-                    "Not enough TileDataSo types to generate pairs. Check TileDataSo types in storage.");
-            }
+            
 
             if (!CheckOverlapsInBlueprint(positions))
             {
                 throw new Exception("Positions are overlaps in blueprint.");
             }
-
-
-            //generate tile so pairs
-            List<TileDataSo> firstElements = tilesSo.Take(tileCount / 2).ToList();
-
-            List<TileDataSo> tilePairsRandomizeList = new List<TileDataSo>();
-
-            tilePairsRandomizeList.AddRange(firstElements);
-            tilePairsRandomizeList.AddRange(firstElements);
-
-            tilePairsRandomizeList = tilePairsRandomizeList.OrderBy(x => Random.Range(0f, 1f)).ToList();
-
-            //generate board
-            if (positions.Length != tilePairsRandomizeList.Count)
-                throw new System.ArgumentException("Positions and Tiles must have the same length");
-
+            
 
             for (int i = 0; i < positions.Length; i++)
             {
-                boardDictionary.Add(positions[i], tilePairsRandomizeList[i]);
+                boardList.Add(positions[i]);
             }
-
-
-            Debug.Log("Total tiles generated "+ tilePairsRandomizeList.Count);
-
-            return boardDictionary;
+            
+            Debug.Log("Total positions generated " + positions.Length);
+            
+            return boardList;
         }
-        
 
         private bool CheckOverlapsInBlueprint(Vector3[] positions)
         {
