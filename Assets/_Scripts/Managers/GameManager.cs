@@ -1,4 +1,5 @@
-﻿using _Scripts.Tiles;
+﻿using System.Collections;
+using _Scripts.Tiles;
 using UnityEngine;
 
 namespace _Scripts.Managers
@@ -61,37 +62,52 @@ namespace _Scripts.Managers
                 Debug.Log("add tile as second");
             }
 
-            if (firstSelectedTile != null && secondSelectedTile != null)
+            StartCoroutine(CompareTiles());
+        }
+
+        private IEnumerator CompareTiles()
+        {
+            SimpleEventManager.Instance.UpdateInputBlockStatus(true);
+            
+            yield return new WaitForSeconds(0.2f); 
+
+            if (firstSelectedTile.TileName != secondSelectedTile.TileName)
             {
-                Debug.Log("Compare tiles");
-                if (firstSelectedTile.TileName != secondSelectedTile.TileName)
-                {
-                    firstSelectedTile.ToggleSelected();
-                    secondSelectedTile.ToggleSelected();
-                    Debug.Log("Tiles are not match");
-                }
-                else
-                {
-                    Debug.Log("Tiles are equal");
-                    SimpleEventManager.Instance.RemoveTileRequest(firstSelectedTile.gameObject);
-                    SimpleEventManager.Instance.RemoveTileRequest(secondSelectedTile.gameObject);
-                }
-
-                ClearSelectedTiles();
                 
-                int tilesLeft = SimpleEventManager.Instance.GetTilesCount();
-
-                if (tilesLeft > 0)
-                {
-                    SimpleEventManager.Instance.UpdateTilesOnBoardIsOpenRequest();
-                }
-                else
-                {
-                    SimpleEventManager.Instance.SetBoardSolvedStatus(true);
-                }
+                firstSelectedTile.DisplayMissMatch();
+                secondSelectedTile.DisplayMissMatch();
+                Debug.Log("tiles are not equal");
+                
+                yield return new WaitForSeconds(0.2f);
+                
+                firstSelectedTile.ToggleSelected();
+                secondSelectedTile.ToggleSelected();
+            }
+            else
+            {
+                firstSelectedTile.DisplayMatch();
+                secondSelectedTile.DisplayMatch();
+                
+                Debug.Log("tiles are equal");
+                
+                yield return new WaitForSeconds(0.2f);
+                
+                SimpleEventManager.Instance.RemoveTileRequest(firstSelectedTile.gameObject);
+                SimpleEventManager.Instance.RemoveTileRequest(secondSelectedTile.gameObject);
             }
 
+            ClearSelectedTiles();
+            SimpleEventManager.Instance.UpdateInputBlockStatus(false);
 
+            int tilesLeft = SimpleEventManager.Instance.GetTilesCount();
+            if (tilesLeft > 0)
+            {
+                SimpleEventManager.Instance.UpdateTilesOnBoardIsOpenRequest();
+            }
+            else
+            {
+                SimpleEventManager.Instance.SetBoardSolvedStatus(true);
+            }
         }
 
         private void ClearSelectedTiles()

@@ -98,12 +98,26 @@ namespace _Scripts.Tiles
             _isSelected = !_isSelected;
             if (_isSelected)
             {
-                _tileMaterial.color = Color.yellow;
+                _tileMaterial.color = new Color(0.94f, 0.9f, 0.55f);
             }
             else
             {
                 _tileMaterial.color = Color.white;
             }
+        }
+
+        public void DisplayMissMatch()
+        {
+
+            _tileMaterial.color = new Color(0.94f, 0.5f, 0.5f);
+
+        }
+        
+        public void DisplayMatch()
+        {
+
+            _tileMaterial.color = new Color(0.6f, 0.98f, 0.6f);
+
         }
 
         private void UpdateTileColor(bool isAvailable)

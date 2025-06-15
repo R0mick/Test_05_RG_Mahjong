@@ -246,7 +246,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 234007821}
   m_OnClick:
     m_PersistentCalls:
@@ -1523,7 +1523,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1583088062}
   m_OnClick:
     m_PersistentCalls:
@@ -1657,6 +1657,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winMessage: {fileID: 1510464339}
   rebuildIcon: {fileID: 594537566}
+  rebuildButton: {fileID: 234007820}
+  autoSolveButton: {fileID: 1583088061}
 --- !u!4 &1965082749
 Transform:
   m_ObjectHideFlags: 0
