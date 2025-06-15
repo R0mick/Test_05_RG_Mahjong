@@ -1,9 +1,11 @@
-using System;
 using _Scripts.Managers;
 using UnityEngine;
 
 namespace _Scripts.Tiles
 {
+    /// <summary>
+    /// Represents tile on the scene.
+    /// </summary>
     public class Tile : MonoBehaviour, ITile
     {
         [SerializeField] private SpriteRenderer spriteRenderer;

@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace _Scripts.Managers
 {
+    /// <summary>
+    /// Simple event bus for events transition between components.
+    /// </summary>
     public class SimpleEventManager:MonoBehaviour
     {
         public static SimpleEventManager Instance;
@@ -13,8 +16,6 @@ namespace _Scripts.Managers
         {
             Instance = this;
         }
-        
-        
         
         
         public event Action<Tile> OnTileClicked;
@@ -53,10 +54,37 @@ namespace _Scripts.Managers
             OnUpdateInputBlockStatus?.Invoke(isBlocked);
         }
         
-        public event Action<bool> OnBoardSolvedStatus;
-        public void BoardSolvedStatus(bool isSolved)
+        public event Action<bool> OnSetBoardSolvedStatus;
+        public void SetBoardSolvedStatus(bool isSolved)
         {
-            OnBoardSolvedStatus?.Invoke(isSolved);
+            OnSetBoardSolvedStatus?.Invoke(isSolved);
+        }
+        
+        public event Action<GameObject> OnRemoveTileRequest;
+        public void RemoveTileRequest(GameObject tile)
+        {
+            OnRemoveTileRequest?.Invoke(tile);
+        }
+        
+        public event Action OnClearSelectedTilesRequest;
+        public void ClearSelectedTilesRequest()
+        {
+            OnClearSelectedTilesRequest?.Invoke();
+        }
+        public event Action OnUpdateTilesOnBoardIsOpenRequest;
+        public void UpdateTilesOnBoardIsOpenRequest()
+        {
+            OnUpdateTilesOnBoardIsOpenRequest?.Invoke();
+        }
+        
+        public event Func<int> OnGetTilesCount;
+        public int GetTilesCount()
+        {
+            if (OnGetTilesCount == null)
+            {
+                return -1;
+            }
+            return OnGetTilesCount.Invoke();
         }
         
     }

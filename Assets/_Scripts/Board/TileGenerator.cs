@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using _Scripts.Managers;
 using _Scripts.Tiles;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace _Scripts.Board
 {
+    /// <summary>
+    /// Generates tiles go on the scene.
+    /// </summary>
     public class TileGenerator : MonoBehaviour
     {
-        private List<GameObject> _tilesList = new List<GameObject>();
+        private List<GameObject> _tilesList = new();
         
         [SerializeField] private GameObject tilePrefab;
         [SerializeField] private Vector3 tileOffset;
@@ -23,19 +23,27 @@ namespace _Scripts.Board
             
             foreach (var position in positionsList)
             {
-                //add offset
+                
+                //revers y and z to match positions grid
                 Vector3 spawnPosition = new Vector3(
                     position.x *  tileOffset.x,
                     position.y *  tileOffset.y *-1,
                     position.z *  tileOffset.z *-1
                 );
                 
+                //add little offset for the layers to compensate their slide
+                if (position.z > 0)
+                {
+                    spawnPosition.x += position.z * 0.1f;
+                    spawnPosition.y += position.z * 0.1f;
+                }
+                
                 //instantiate
                 GameObject tileGo = Instantiate(tilePrefab, spawnPosition, Quaternion.identity);
                 
                 //set stats
-                tileGo.GetComponent<Tile>().SetSprite(tilesSoList[tileId].tileSprite);
-                tileGo.GetComponent<Tile>().TileName = tilesSoList[tileId].tileName;
+                tileGo.GetComponent<Tile>().SetSprite(tilesSoList[tileId].TileSprite);
+                tileGo.GetComponent<Tile>().TileName = tilesSoList[tileId].TileName;
                 tileGo.GetComponent<Tile>().TileId = tileId;
                 tileGo.GetComponent<Tile>().BoardPosition = position;
                 

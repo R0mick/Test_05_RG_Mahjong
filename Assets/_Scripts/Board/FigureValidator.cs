@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Scripts.Tiles;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace _Scripts.Board
 {
+    /// <summary>
+    /// Validates figure before Board Manager can use for board beneration.
+    /// </summary>
     public class FigureValidator
     {
 
-        public List<Vector3> GenerateBoard(Vector3[] positions)
+        public List<Vector3> ValidatePositions(Vector3[] positions)
         {
             List<Vector3> boardList = new();
 

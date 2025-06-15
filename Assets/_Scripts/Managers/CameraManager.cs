@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Scripts.Managers
 {
+    /// <summary>
+    /// Automatically aligns to the center of the figure on board.
+    /// </summary>
     public class CameraManager:MonoBehaviour
     {
         
@@ -17,7 +19,8 @@ namespace _Scripts.Managers
             SimpleEventManager.Instance.OnCenterCameraRequest -= CenterCameraRequestOnTiles;
         }
 
-        public void CenterCameraRequestOnTiles(List<GameObject> tilesList)
+
+        private void CenterCameraRequestOnTiles(List<GameObject> tilesList)
         {
             if (tilesList.Count == 0) return;
 

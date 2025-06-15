@@ -1,8 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Scripts.Board
 {
+    /// <summary>
+    /// Used to create figure blueprint via V3 coordinates
+    /// </summary>
     public static class BoardFigureBlueprints
     {
 

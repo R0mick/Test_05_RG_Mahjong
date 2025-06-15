@@ -1,30 +1,29 @@
-﻿using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace _Scripts.Tiles
 {
+    /// <summary>
+    /// Contains info for tiles.
+    /// </summary>
     [CreateAssetMenu(fileName = "TileDataSo", menuName = "ScriptableObject/TileDataSo")]
-    public class TileDataSo:ScriptableObject,ITile
+    public class TileDataSo:ScriptableObject
     {
-
-        public Sprite tileSprite;
-        
-        public string tileName;
-        public Vector3 BoardPosition { get; set; }
-        public bool IsOpen { get; set; }
+        [SerializeField] Sprite tileSprite;
+        [SerializeField] string tileName;
 
         public string TileName
         {
             get => tileName;
             set => tileName = value;
         }
-
+        public Sprite TileSprite => tileSprite;
 
         private void OnValidate()
         {
             #if UNITY_EDITOR
             tileName = tileSprite.name;
-            UnityEditor.EditorUtility.SetDirty(this);
+            EditorUtility.SetDirty(this);
             #endif
         }
     }

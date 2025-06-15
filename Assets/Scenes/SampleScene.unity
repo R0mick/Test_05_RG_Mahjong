@@ -151,42 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de68bac1d784f8a86f4a761c9ea7792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilesSoList:
-  - {fileID: 11400000, guid: 8dc0253428e17b94aadcff018211469f, type: 2}
-  - {fileID: 11400000, guid: cde89115e88c2074aa85033bc345853c, type: 2}
-  - {fileID: 11400000, guid: f7de021dda6214647915b1e9833253f0, type: 2}
-  - {fileID: 11400000, guid: c0f65fe419a95c348be2efef5fc3893c, type: 2}
-  - {fileID: 11400000, guid: c3dcdfe1088a6a44892f935220f73144, type: 2}
-  - {fileID: 11400000, guid: 87e850c300fd4a84fbe8da94f6f35671, type: 2}
-  - {fileID: 11400000, guid: 90462f007da7fab40b7ac7de0b190a54, type: 2}
-  - {fileID: 11400000, guid: 7045da64318920c45a7a766cfaa507fe, type: 2}
-  - {fileID: 11400000, guid: 343bd8e1ccd557043931f15ad9214ec0, type: 2}
-  - {fileID: 11400000, guid: 874d21fa7258ed24f86ef71f36183b12, type: 2}
-  - {fileID: 11400000, guid: bc964147010b74c48999daf3e11a963c, type: 2}
-  - {fileID: 11400000, guid: 4be3dba790bed6c409a81ff087a895d9, type: 2}
-  - {fileID: 11400000, guid: bae6d63782d496d4992c3d0e19c79f0d, type: 2}
-  - {fileID: 11400000, guid: 40a9d4592af4ded4d8c6e695c1e1ce13, type: 2}
-  - {fileID: 11400000, guid: 5db1feec14170a644bd201af7ea1fbdb, type: 2}
-  - {fileID: 11400000, guid: a7635cc3fe13023479f1cda67606f8ef, type: 2}
-  - {fileID: 11400000, guid: 93fcd09c4cb75224f9e82b7f8209c581, type: 2}
-  - {fileID: 11400000, guid: a87adee76d32ea04a8abc38b4c86e195, type: 2}
-  - {fileID: 11400000, guid: 4f3bf3119de2a0e4dacc78c4afc395e5, type: 2}
-  - {fileID: 11400000, guid: 62a69c711e1a32d49a076e98ef9d7e4a, type: 2}
-  - {fileID: 11400000, guid: 97c2f241d25821747ada2e5319b6cc7b, type: 2}
-  - {fileID: 11400000, guid: 24ee69d83ef10454eb787fd61f925655, type: 2}
-  - {fileID: 11400000, guid: 4ba333ae3a0576348876b2a519151906, type: 2}
-  - {fileID: 11400000, guid: b29b1f62e8c90654f9469b5fdfc921ae, type: 2}
-  - {fileID: 11400000, guid: 0a4a075e85773834ea9e2aafc0947c89, type: 2}
-  - {fileID: 11400000, guid: 5c6ad4c27f111ea4b8dbc076744f8ec7, type: 2}
-  - {fileID: 11400000, guid: 0ef745a2a5a94a045a013f861a4cfc98, type: 2}
-  - {fileID: 11400000, guid: dedd63e8b03e1154da0cc1db3955a435, type: 2}
-  - {fileID: 11400000, guid: da39b88d1a83e9040a17c138e3a3e0b5, type: 2}
-  - {fileID: 11400000, guid: 2a1630030891de748aff899923362abb, type: 2}
-  tileGenerator: {fileID: 1630995939}
   firstSelectedTile: {fileID: 0}
   secondSelectedTile: {fileID: 0}
-  selectedFigure: 0
-  rebuildAttempts: 10000
 --- !u!4 &21214752
 Transform:
   m_ObjectHideFlags: 0
@@ -238,7 +204,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -30, y: 10}
+  m_AnchoredPosition: {x: -30, y: 20}
   m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &234007820
@@ -1095,6 +1061,84 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &1151151132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1151151134}
+  - component: {fileID: 1151151133}
+  m_Layer: 0
+  m_Name: BoardManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1151151133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151151132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1f60a53eda4805b129e7e98d16f41c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilesSoList:
+  - {fileID: 11400000, guid: 8dc0253428e17b94aadcff018211469f, type: 2}
+  - {fileID: 11400000, guid: cde89115e88c2074aa85033bc345853c, type: 2}
+  - {fileID: 11400000, guid: f7de021dda6214647915b1e9833253f0, type: 2}
+  - {fileID: 11400000, guid: c0f65fe419a95c348be2efef5fc3893c, type: 2}
+  - {fileID: 11400000, guid: c3dcdfe1088a6a44892f935220f73144, type: 2}
+  - {fileID: 11400000, guid: 87e850c300fd4a84fbe8da94f6f35671, type: 2}
+  - {fileID: 11400000, guid: 90462f007da7fab40b7ac7de0b190a54, type: 2}
+  - {fileID: 11400000, guid: 7045da64318920c45a7a766cfaa507fe, type: 2}
+  - {fileID: 11400000, guid: 343bd8e1ccd557043931f15ad9214ec0, type: 2}
+  - {fileID: 11400000, guid: 874d21fa7258ed24f86ef71f36183b12, type: 2}
+  - {fileID: 11400000, guid: bc964147010b74c48999daf3e11a963c, type: 2}
+  - {fileID: 11400000, guid: 4be3dba790bed6c409a81ff087a895d9, type: 2}
+  - {fileID: 11400000, guid: bae6d63782d496d4992c3d0e19c79f0d, type: 2}
+  - {fileID: 11400000, guid: 40a9d4592af4ded4d8c6e695c1e1ce13, type: 2}
+  - {fileID: 11400000, guid: 5db1feec14170a644bd201af7ea1fbdb, type: 2}
+  - {fileID: 11400000, guid: a7635cc3fe13023479f1cda67606f8ef, type: 2}
+  - {fileID: 11400000, guid: 93fcd09c4cb75224f9e82b7f8209c581, type: 2}
+  - {fileID: 11400000, guid: a87adee76d32ea04a8abc38b4c86e195, type: 2}
+  - {fileID: 11400000, guid: 4f3bf3119de2a0e4dacc78c4afc395e5, type: 2}
+  - {fileID: 11400000, guid: 62a69c711e1a32d49a076e98ef9d7e4a, type: 2}
+  - {fileID: 11400000, guid: 97c2f241d25821747ada2e5319b6cc7b, type: 2}
+  - {fileID: 11400000, guid: 24ee69d83ef10454eb787fd61f925655, type: 2}
+  - {fileID: 11400000, guid: 4ba333ae3a0576348876b2a519151906, type: 2}
+  - {fileID: 11400000, guid: b29b1f62e8c90654f9469b5fdfc921ae, type: 2}
+  - {fileID: 11400000, guid: 0a4a075e85773834ea9e2aafc0947c89, type: 2}
+  - {fileID: 11400000, guid: 5c6ad4c27f111ea4b8dbc076744f8ec7, type: 2}
+  - {fileID: 11400000, guid: 0ef745a2a5a94a045a013f861a4cfc98, type: 2}
+  - {fileID: 11400000, guid: dedd63e8b03e1154da0cc1db3955a435, type: 2}
+  - {fileID: 11400000, guid: da39b88d1a83e9040a17c138e3a3e0b5, type: 2}
+  - {fileID: 11400000, guid: 2a1630030891de748aff899923362abb, type: 2}
+  tileGenerator: {fileID: 1630995939}
+  selectedFigure: 0
+  rebuildAttempts: 10000
+--- !u!4 &1151151134
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151151132}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.4136478, y: -1.3421116, z: -0.2823101}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1320982610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,7 +1481,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -30, y: -60}
+  m_AnchoredPosition: {x: -30, y: -40}
   m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1583088061
@@ -1484,9 +1528,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 21214751}
-        m_TargetAssemblyTypeName: _Scripts.Managers.GameManager, Assembly-CSharp
-        m_MethodName: AutoSolveBoard
+      - m_Target: {fileID: 1965082748}
+        m_TargetAssemblyTypeName: _Scripts.Managers.UiManager, Assembly-CSharp
+        m_MethodName: AutoSolveLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1635,9 +1679,10 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 705507995}
-  - {fileID: 21214752}
-  - {fileID: 1098642657}
-  - {fileID: 364428969}
-  - {fileID: 1630995940}
-  - {fileID: 1965082749}
   - {fileID: 1320982613}
+  - {fileID: 1098642657}
+  - {fileID: 1965082749}
+  - {fileID: 364428969}
+  - {fileID: 21214752}
+  - {fileID: 1151151134}
+  - {fileID: 1630995940}

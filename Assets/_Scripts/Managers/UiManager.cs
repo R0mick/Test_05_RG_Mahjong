@@ -1,24 +1,25 @@
-﻿using System;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Scripts.Managers
 {
+    /// <summary>
+    /// Contains references for ui content. Manages button clicks.
+    /// </summary>
     public class UiManager:MonoBehaviour
     {
-        [SerializeField] GameObject winMessage;
-        [SerializeField] GameObject rebuildIcon;
+        [SerializeField] private GameObject winMessage;
+        [SerializeField] private GameObject rebuildIcon;
 
 
         private void OnEnable()
         {
-            SimpleEventManager.Instance.OnBoardSolvedStatus += SetBoardSolvedStatus;
+            SimpleEventManager.Instance.OnSetBoardSolvedStatus += SetSetBoardSolvedStatus;
             SimpleEventManager.Instance.OnRebuildLevelComplete += RebuildComplete;
         }
         
         private void OnDisable()
         {
-            SimpleEventManager.Instance.OnBoardSolvedStatus -= SetBoardSolvedStatus;
+            SimpleEventManager.Instance.OnSetBoardSolvedStatus -= SetSetBoardSolvedStatus;
             SimpleEventManager.Instance.OnRebuildLevelComplete -= RebuildComplete;
         }
 
@@ -27,8 +28,13 @@ namespace _Scripts.Managers
             rebuildIcon.SetActive(true);
             SimpleEventManager.Instance.RebuildLevelRequest();
         }
+        
+        public void AutoSolveLevel()
+        {
+            SimpleEventManager.Instance.AutoSolveRequest();
+        }
 
-        private void SetBoardSolvedStatus(bool solved)
+        private void SetSetBoardSolvedStatus(bool solved)
         {
             winMessage.SetActive(solved);
         }
