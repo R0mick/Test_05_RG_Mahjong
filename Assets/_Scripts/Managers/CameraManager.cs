@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Scripts.Managers
@@ -8,7 +9,6 @@ namespace _Scripts.Managers
     /// </summary>
     public class CameraManager:MonoBehaviour
     {
-        
         private void OnEnable()
         {
             SimpleEventManager.Instance.OnCenterCameraRequest += CenterCameraRequestOnTiles;
@@ -18,7 +18,6 @@ namespace _Scripts.Managers
         {
             SimpleEventManager.Instance.OnCenterCameraRequest -= CenterCameraRequestOnTiles;
         }
-
 
         private void CenterCameraRequestOnTiles(List<GameObject> tilesList)
         {
@@ -41,6 +40,8 @@ namespace _Scripts.Managers
             float centerX = (minX + maxX) / 2f;
             float centerY = (minY + maxY) / 2f;
             
+            float screenRatio = (float)Screen.width / Screen.height;
+            
             if (Camera.main != null)
             {
                 Camera.main.transform.position = new Vector3(centerX, centerY, -10);
@@ -48,7 +49,8 @@ namespace _Scripts.Managers
                 // set camera position
                 float width = maxX - minX;
                 float height = maxY - minY;
-                float requiredSize = Mathf.Max(width, height) * 0.9f;
+                //float requiredSize = Mathf.Max(width, height) * 0.9f;
+                float requiredSize = (Mathf.Max(width, height) /3f) + screenRatio; //was found empirically
 
                 Camera.main.orthographicSize = requiredSize;
                 
